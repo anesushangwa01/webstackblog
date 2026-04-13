@@ -10,6 +10,8 @@ Data is fetched via GraphQL — no REST API is used.
 - **TypeScript** — fully typed interfaces for all WP data
 - **Loading states** — animated skeleton cards while posts load
 - **Error states** — friendly error banner with setup instructions
+- **Testing** — Jest & React Testing Library integration with basic component tests
+- **CI/CD** — GitHub Actions pipeline (linting, testing, and branch builds)
 - **ISR** — pages revalidate every 60 seconds automatically
 - **Responsive** — mobile-first, collapses to 1-column on small screens
 
@@ -69,12 +71,38 @@ npm run dev
 
 ---
 
+## 🧪 Testing
+
+The project uses **Jest** and **React Testing Library** for component testing.
+
+```bash
+# Run unit tests
+npm run test
+
+# Run the linter
+npm run lint
+```
+
+---
+
 ## 🏗️ Building for Production
 
 ```bash
 npm run build
 npm run start
 ```
+
+---
+
+## 🚀 CI/CD Pipeline
+
+The project includes an automated CI/CD pipeline using **GitHub Actions**. It triggers on any push or pull request to the `main` branch. 
+
+The pipeline ensures code quality by automatically validating:
+1. Node dependency installations
+2. Code linting rules (`npm run lint`)
+3. Test suite execution (`npm run test`)
+4. Production bundle builds (`npm run build`)
 
 ---
 
@@ -144,6 +172,8 @@ Single post page:
 | Frontend | Next.js 16 (App Router) |
 | Language | TypeScript |
 | Styling | Vanilla CSS (custom design system) |
+| Testing | Jest, React Testing Library |
+| CI/CD | GitHub Actions |
 | Fonts | Inter (Google Fonts) |
 | Images | Next.js Image Optimization |
 | Rendering | SSG + ISR (60s revalidate) |
