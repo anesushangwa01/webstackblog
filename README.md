@@ -40,6 +40,10 @@ Data is fetched via GraphQL — no REST API is used.
 
 > **Tip:** Post featured images require the post to have a featured image set in WordPress. Author avatars are pulled from Gravatar via WPGraphQL.
 
+### 🏠 Local WP (Local by Flywheel)
+This project is configured to work harmoniously with **[Local WP](https://localwp.com/)**.
+When setting this up on your own machine, you can host your WordPress backend locally (e.g. `http://webstack.local`) and query it directly from Next.js. Just ensure your `.env` points to your Local WP domain's `/graphql` endpoint.
+
 ---
 
 ## ⚙️ Environment Variables
@@ -96,13 +100,17 @@ npm run start
 
 ## 🚀 CI/CD Pipeline
 
-The project includes an automated CI/CD pipeline using **GitHub Actions**. It triggers on any push or pull request to the `main` branch. 
+The project includes an automated CI/CD pipeline using **GitHub Actions**. It is configured to trigger on:
+- **Pushes** to the `master` branch.
+- **Pull Requests** targeting the `dev` branch.
 
-The pipeline ensures code quality by automatically validating:
-1. Node dependency installations
-2. Code linting rules (`npm run lint`)
-3. Test suite execution (`npm run test`)
-4. Production bundle builds (`npm run build`)
+### How it Works (Pipeline Stages)
+When a developer pushes code or opens a PR, GitHub Actions automatically provisions an Ubuntu runner with Node.js 24 and executes the following sequence:
+
+1. **Setup & Install (`npm ci`)**: Downloads the exact versions of all dependencies from `package-lock.json` cleanly and deterministically.
+2. **Linting (`npm run lint`)**: Runs ESLint and Next.js built-in rules to catch style violations or problematic syntax before it merges.
+3. **Testing (`npm run test`)**: Executes the Jest testing suite & React Testing Library specifications (e.g., verifying `Navbar.test.tsx` renders links correctly). If tests fail, the pipeline fails.
+4. **Build (`npm run build`)**: Ultimately attempts to compile the entire Next.js application into an optimized production bundle. This verifies there are no hidden TypeScript errors or missing static assets. During this stage, it uses the fallback Local WP URL (`http://webstack.local/graphql`) if GitHub secrets aren't present.
 
 ---
 
