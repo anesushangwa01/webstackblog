@@ -36,4 +36,3 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_WORDPRESS_API_URL: ${{ secrets.NEXT_PUBLIC_WORDPRESS_API_URL || 'http://webstack.local/graphql' }}
-
